@@ -3,6 +3,7 @@ import Layout from '@/pages/Layout'
 import Home from '@/pages/Home'
 import AreaLogada from '@/pages/AreaLogada'
 import Pedidos from '@/pages/Pedidos'
+import Categoria from '@/pages/Categoria'
 
 const AppRoutes = () => {
     return (
@@ -13,6 +14,7 @@ const AppRoutes = () => {
                     <Route path="minha-conta" element={<AreaLogada />}>
                         <Route path="pedidos" element={<Pedidos />} />
                     </Route>
+                    <Route path="categorias/:slug" element={<Categoria />} />
                 </Route>
             </Routes>
         </Router>

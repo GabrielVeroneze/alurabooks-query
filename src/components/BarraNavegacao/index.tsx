@@ -46,31 +46,16 @@ const BarraNavegacao = () => {
             <div className={styles.navegacao}>
                 <h4 className={styles.titulo}>Categorias</h4>
                 <ul className={styles.menu}>
-                    <li className={styles.item}>
-                        <Link className={styles.link} to="/">
-                            Frontend
-                        </Link>
-                    </li>
-                    <li className={styles.item}>
-                        <Link className={styles.link} to="/">
-                            Programação
-                        </Link>
-                    </li>
-                    <li className={styles.item}>
-                        <Link className={styles.link} to="/">
-                            Infraestrutura
-                        </Link>
-                    </li>
-                    <li className={styles.item}>
-                        <Link className={styles.link} to="/">
-                            Business
-                        </Link>
-                    </li>
-                    <li className={styles.item}>
-                        <Link className={styles.link} to="/">
-                            Design e UX
-                        </Link>
-                    </li>
+                    {categorias.map(categoria => (
+                        <li key={categoria.id} className={styles.item}>
+                            <Link
+                                className={styles.link}
+                                to={`/categorias/${categoria.slug}`}
+                            >
+                                {categoria.nome}
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
             </div>
             <ul className={styles.usuario}>
@@ -106,7 +91,10 @@ const BarraNavegacao = () => {
                 {usuarioEstaLogado && (
                     <>
                         <li>
-                            <Link className={styles.conta} to="/minha-conta/pedidos">
+                            <Link
+                                className={styles.conta}
+                                to="/minha-conta/pedidos"
+                            >
                                 Minha conta
                             </Link>
                         </li>

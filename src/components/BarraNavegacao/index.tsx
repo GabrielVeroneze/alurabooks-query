@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { buscarCategorias } from '@/services/categorias'
 import { limparToken, obterToken } from '@/utils/token'
-import { Categoria } from '@/interfaces/Categoria'
+import { CategoriaDados } from '@/interfaces/CategoriaDados'
 import ModalLoginUsuario from '@/components/ModalLoginUsuario'
 import ModalCadastroUsuario from '@/components/ModalCadastroUsuario'
 import ContaNavegacao from './ContaNavegacao'
@@ -13,7 +13,7 @@ import styles from './BarraNavegacao.module.scss'
 const BarraNavegacao = () => {
     const [modalLoginAberta, setModalLoginAberta] = useState<boolean>(false)
     const [modalCadastroAberta, setModalCadastroAberta] = useState<boolean>(false)
-    const [categorias, setCategorias] = useState<Categoria[]>([])
+    const [categorias, setCategorias] = useState<CategoriaDados[]>([])
 
     useEffect(() => {
         buscarCategorias()

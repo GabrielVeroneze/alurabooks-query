@@ -9,7 +9,7 @@ const Categoria = () => {
     const params = useParams()
 
     const { data: categoria, isLoading } = useQuery({
-        queryKey: ['categoria'],
+        queryKey: ['categoria', params.slug],
         queryFn: () => buscarCategoriaEspecifica(params.slug || ''),
     })
 

@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { AbCampoTexto } from 'ds-alurabooks'
+import { buscarLivrosLancamentos, buscarLivrosMaisVendidos } from '@/services/livros'
 import Banner from '@/components/Banner'
 import Titulo from '@/components/Titulo'
 import LivrosDestaque from '@/components/LivrosDestaque'
@@ -10,53 +12,15 @@ import styles from './Home.module.scss'
 const Home = () => {
     const [busca, setBusca] = useState<string>('')
 
-    const lancamentos = [
-        {
-            autor: 'Tárcio Zemel',
-            descricao: 'Técnicas e ferramentas que fazem a diferença nos seus estilos',
-            imagem: '/imagens/livros/css.jpg',
-            nome: 'CSS Eficiente',
-            preco: 29.9,
-        },
-        {
-            autor: 'Sass',
-            descricao: 'Aprendendo pré-processadores CSS',
-            imagem: '/imagens/livros/sass.jpg',
-            nome: 'Natan Souza',
-            preco: 29.9,
-        },
-        {
-            autor: 'Diego Eis',
-            descricao: 'O caminho das pedras para ser um dev Front-End',
-            imagem: '/imagens/livros/frontend.jpg',
-            nome: 'Guia Front-End',
-            preco: 29.9,
-        },
-    ]
+    const { data: lancamentos } = useQuery({
+        queryKey: ['lancamentos'],
+        queryFn: buscarLivrosLancamentos,
+    })
 
-    const maisVendidos = [
-        {
-            autor: 'Thiago da Silva Adriano',
-            descricao: 'Melhore suas aplicações JavaScript',
-            imagem: '/imagens/livros/typescript.jpg',
-            nome: 'Guia prático de TypeScript',
-            preco: 29.9,
-        },
-        {
-            autor: 'Akira Hanashiro',
-            descricao: 'A revolucionária linguagem de consulta e manipulação de dados para APIs',
-            imagem: '/imagens/livros/graphql.jpg',
-            nome: 'GraphQL',
-            preco: 29.9,
-        },
-        {
-            autor: 'Vinícius Carvalho',
-            descricao: 'PostgreSQL',
-            imagem: '/imagens/livros/postgre.jpg',
-            nome: 'PostgreSQL',
-            preco: 29.9,
-        },
-    ]
+    const { data: maisVendidos } = useQuery({
+        queryKey: ['maisVendidos'],
+        queryFn: buscarLivrosMaisVendidos,
+    })
 
     return (
         <section className={styles.home}>
@@ -75,9 +39,9 @@ const Home = () => {
                 </form>
             </Banner>
             <Titulo texto="ÚLTIMOS LANÇAMENTOS" />
-            <LivrosDestaque livros={lancamentos} />
+            <LivrosDestaque livros={lancamentos ?? []} />
             <Titulo texto="MAIS VENDIDOS" />
-            <LivrosDestaque livros={maisVendidos} />
+            <LivrosDestaque livros={maisVendidos ?? []} />
             <TagsCategorias />
             <NewsLetter />
         </section>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AbBotao, AbCard } from 'ds-alurabooks'
+import { obterValorMinimo } from '@/utils/valor-minimo-livro'
 import { formatador } from '@/utils/formatador-moeda'
 import { Livro } from '@/interfaces/Livro'
 import styles from './LivrosDestaque.module.scss'
@@ -17,9 +18,7 @@ const LivrosDestaque = ({ livros }: LivrosDestaqueProps) => {
         }
     }, [livros])
 
-    const valorMinimo = selecionado
-        ? Math.min(...selecionado.opcoesCompra.map(opcao => opcao.preco))
-        : 0
+    const valorMinimo = selecionado ? obterValorMinimo(selecionado) : 0
 
     return (
         <section className={styles.destaque}>

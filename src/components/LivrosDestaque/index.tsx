@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AbBotao, AbCard } from 'ds-alurabooks'
+import { formatador } from '@/utils/formatador-moeda'
 import { Livro } from '@/interfaces/Livro'
 import styles from './LivrosDestaque.module.scss'
 
@@ -8,28 +9,34 @@ interface LivrosDestaqueProps {
 }
 
 const LivrosDestaque = ({ livros }: LivrosDestaqueProps) => {
-    const [selecionado, selecionarLivro] = useState<Livro>(livros[0])
+    const [selecionado, selecionarLivro] = useState<Livro | null>(null)
+
+    useEffect(() => {
+        if (livros?.length) {
+            selecionarLivro(livros[0])
+        }
+    }, [livros])
+
+    const valorMinimo = selecionado
+        ? Math.min(...selecionado.opcoesCompra.map(opcao => opcao.preco))
+        : 0
 
     return (
         <section className={styles.destaque}>
             <ul className={styles.livros}>
-                {livros.map((livro) => (
+                {livros.map(livro => (
                     <li
-                        key={livro.nome}
+                        key={livro.id}
                         onClick={() => selecionarLivro(livro)}
                         className={`
                             ${styles.livro}
-                            ${
-                                selecionado.nome === livro.nome
-                                    ? styles.selecionado
-                                    : ''
-                            }
+                            ${selecionado?.titulo === livro.titulo ? styles.selecionado : ''}
                         `}
                     >
                         <img
                             className={styles.imagem}
-                            src={livro.imagem}
-                            alt={`Capa do livro ${livro.nome} escrito por ${livro.autor}`}
+                            src={livro.imagemCapa}
+                            alt={`Capa do livro ${livro.titulo} escrito por ${livro.autor}`}
                         />
                     </li>
                 ))}
@@ -39,17 +46,14 @@ const LivrosDestaque = ({ livros }: LivrosDestaqueProps) => {
                     <header>
                         <h5 className={styles.titulo}>Sobre o livro:</h5>
                     </header>
-                    <h6 className={styles.nome}>{selecionado.nome}</h6>
-                    <p className={styles.info}>{selecionado.descricao}</p>
-                    <p className={styles.info}>Por: {selecionado.autor}</p>
+                    <h6 className={styles.nome}>{selecionado?.titulo}</h6>
+                    <p className={styles.info}>{selecionado?.descricao}</p>
+                    <p className={styles.info}>Por: {selecionado?.autor}</p>
                     <footer className={styles.rodape}>
                         <div className={styles.preco}>
                             <em>A partir de:</em>
                             <strong>
-                                {Intl.NumberFormat('pt-br', {
-                                    style: 'currency',
-                                    currency: 'BRL',
-                                }).format(selecionado.preco)}
+                                {formatador.format(valorMinimo)}
                             </strong>
                         </div>
                         <div className={styles.botao}>

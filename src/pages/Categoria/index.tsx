@@ -4,7 +4,6 @@ import { buscarCategoriaEspecifica } from '@/services/categorias'
 import TituloPrincipal from '@/components/TituloPrincipal'
 import Loader from '@/components/Loader'
 import ListaLivros from '@/components/ListaLivros'
-import styles from './Categoria.module.scss'
 
 const Categoria = () => {
     const params = useParams()

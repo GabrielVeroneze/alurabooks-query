@@ -11,7 +11,7 @@ interface CardLivroProps {
 
 const CardLivro = ({ livro }: CardLivroProps) => {
     return (
-        <div className={styles.card} key={livro.id}>
+        <div className={styles.card}>
             <img
                 className={styles.imagem}
                 src={livro.imagemCapa}

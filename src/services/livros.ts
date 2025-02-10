@@ -1,5 +1,6 @@
 import api from '@/services/api'
 import { Livro } from '@/interfaces/Livro'
+import { CategoriaDados } from '@/interfaces/CategoriaDados'
 
 export async function buscarLivrosLancamentos(): Promise<Livro[]> {
     try {
@@ -18,5 +19,19 @@ export async function buscarLivrosMaisVendidos(): Promise<Livro[]> {
         return resposta.data
     } catch {
         throw new Error('Erro ao carregar a lista de livros mais vendidos.')
+    }
+}
+
+export async function buscarLivrosPorCategoria(categoria: CategoriaDados): Promise<Livro[]> {
+    try {
+        const resposta = await api.get<Livro[]>('/livros', {
+            params: {
+                categoria: categoria.id,
+            },
+        })
+
+        return resposta.data
+    } catch {
+        throw new Error('Erro ao buscar os livros pela categoria.')
     }
 }

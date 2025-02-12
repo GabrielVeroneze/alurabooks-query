@@ -4,6 +4,7 @@ import Home from '@/pages/Home'
 import AreaLogada from '@/pages/AreaLogada'
 import Pedidos from '@/pages/Pedidos'
 import Categoria from '@/pages/Categoria'
+import DetalhesLivro from '@/pages/DetalhesLivro'
 
 const AppRoutes = () => {
     return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
                         <Route path="pedidos" element={<Pedidos />} />
                     </Route>
                     <Route path="categorias/:slug" element={<Categoria />} />
+                    <Route path="livro/:slug" element={<DetalhesLivro />} />
                 </Route>
             </Routes>
         </Router>

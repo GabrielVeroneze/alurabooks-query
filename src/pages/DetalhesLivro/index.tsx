@@ -14,7 +14,7 @@ import styles from './DetalhesLivro.module.scss'
 const DetalhesLivro = () => {
     const params = useParams()
 
-    const { data: livro, isLoading } = useQuery({
+    const { data: livro, isLoading, error } = useQuery({
         queryKey: ['livro', params.slug],
         queryFn: () => buscarLivroEspecifico(params.slug || ''),
     })
@@ -23,6 +23,11 @@ const DetalhesLivro = () => {
         queryKey: ['autor', livro?.autor],
         queryFn: () => buscarAutor(livro!.autor),
     })
+
+    if (error) {
+        console.log(error.message)
+        return <h1>Ops! Algum erro inesperado aconteceu</h1>
+    }
 
     if (isLoading || !livro || !autor) {
         return <Loader />

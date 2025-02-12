@@ -35,3 +35,15 @@ export async function buscarLivrosPorCategoria(categoria: CategoriaDados): Promi
         throw new Error('Erro ao buscar os livros pela categoria.')
     }
 }
+
+export async function buscarLivroEspecifico(slug: string): Promise<Livro> {
+    try {
+        const resposta = await api.get<Livro[]>('/livros', {
+            params: { slug: slug },
+        })
+
+        return resposta.data[0]
+    } catch {
+        throw new Error('Erro ao carregar o livro.')
+    }
+}

@@ -36,11 +36,15 @@ export async function buscarLivrosPorCategoria(categoria: CategoriaDados): Promi
     }
 }
 
-export async function buscarLivroEspecifico(slug: string): Promise<Livro> {
+export async function buscarLivroEspecifico(slug: string): Promise<Livro | null> {
     try {
         const resposta = await api.get<Livro[]>('/livros', {
             params: { slug: slug },
         })
+
+        if (resposta.data.length === 0) {
+            return null
+        }
 
         return resposta.data[0]
     } catch {

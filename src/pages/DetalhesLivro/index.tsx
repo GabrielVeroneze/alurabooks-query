@@ -29,6 +29,10 @@ const DetalhesLivro = () => {
         return <h1>Ops! Algum erro inesperado aconteceu</h1>
     }
 
+    if (livro === null) {
+        return <h1>Livro não encontrado!</h1>
+    }
+
     if (isLoading || !livro || !autor) {
         return <Loader />
     }
